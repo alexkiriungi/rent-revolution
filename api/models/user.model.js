@@ -15,6 +15,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    avatar: {
+        type: String,
+        default: "https://photosnow.net/wp-content/uploads/2023/12/no-dp38.jpg"
+    }
 }, { timestamps: true });
 
 const User = mongoose.model('User', userSchema);
