@@ -21,7 +21,6 @@ export default function OAuth() {
                     email: resultsFromGoogle.user.email, photo: resultsFromGoogle.user.photoURL }),
             })
             const data = await res.json();
-            console.log(data);
             dispatch(signInSuccess(data));
             navigate('/');
         } catch (error) {
