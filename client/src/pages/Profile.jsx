@@ -44,6 +44,7 @@ export default function Profile() {
   };
 
   const handleChange = (e) => {
+    setUpdateSuccess(false);
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
