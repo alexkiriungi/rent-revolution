@@ -9,6 +9,7 @@ import cookieParser from 'cookie-parser';
 dotenv.config();
 const port = process.env.PORT || 3001;
 const app = express();
+app.use(cookieParser());
 mongoose.connect(process.env.MONGO_URL).then(() => {
     console.log('Database connection successful');
 })
@@ -18,8 +19,9 @@ mongoose.connect(process.env.MONGO_URL).then(() => {
 
 app.use(express.json());
 app.use('/api/auth', authRoutes);
+app.use('/api/user', userRoutes);
 
-app.use(cookieParser());
+
 
 app.listen(port, () => {
     console.log(`Server is connected at port: ${port}`)
