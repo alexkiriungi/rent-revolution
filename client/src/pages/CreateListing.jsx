@@ -6,7 +6,18 @@ export default function CreateListing() {
     const [ files, setFiles ] = useState([]);
     const [ formData, setFormData ] = useState({
         imageUrls: [],
-    })
+        name: '',
+        description: '',
+        address: '',
+        type: 'rent',
+        bedrooms: 1,
+        bathrooms: 1,
+        regularPrice: 0,
+        discountPrice: 0,
+        offer: false,
+        parking: false,
+        furnished: false,
+    });
     const [ imageUploadError, setImageUploadError ] = useState(false);
     const [ uploading, setUploading ] = useState(false);
 
