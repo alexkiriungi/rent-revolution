@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+import { Link } from 'react-router-dom';
 import { useRef, useState, useEffect } from "react";
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { app } from "../firebase";
@@ -146,6 +147,10 @@ export default function Profile() {
         p-3 uppercase hover:opacity-95 disabled:opacity-80" disabled={loading} >
           {loading? 'Loading...': 'Update'}
         </button>
+        <Link to='/create-listing' className="bg-green-700 text-white p-3 rounded-lg
+        text-center uppercase hover:opacity-80">
+          Create Listing
+        </Link>
       </form>
       <div className="flex justify-between mt-5">
         <span onClick={handleUserDelete} className="text-red-700 cursor-pointer hover:underline">
