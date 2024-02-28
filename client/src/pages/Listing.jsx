@@ -3,19 +3,21 @@ import { Link, useParams } from "react-router-dom";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore from 'swiper';
 import { Navigation } from 'swiper/modules';
+import { useSelector } from "react-redux";
 import 'swiper/css/bundle';
 import {
     FaBath,
     FaBed,
     FaChair,
-    FaMapMarkedAlt,
     FaMapMarkerAlt,
     FaParking,
     FaShare,
   } from 'react-icons/fa';
+import Contact from "../components/Contact";
 
 export default function Listing() {
     SwiperCore.use( [Navigation] );
+    const { currentUser } = useSelector((state) => state.user);
     const [ listing, setListing ] = useState(null);
     const [ loading, setLoading ] = useState(false);
     const [ error, setError ] = useState(false);
@@ -86,7 +88,7 @@ export default function Listing() {
           )}
           <div className='flex flex-col max-w-4xl mx-auto p-3 my-7 gap-4'>
             <p className='text-2xl font-semibold'>
-              {listing.name} - ${' '}
+              {listing.name} - ksh{' '}
               {listing.offer
                 ? listing.discountPrice.toLocaleString('en-US')
                 : listing.regularPrice.toLocaleString('en-US')}
@@ -134,7 +136,7 @@ export default function Listing() {
             </ul>
             {currentUser && listing.userRef !== currentUser._id && !contact && (
               <button
-                onClick
+                onClick={()=>setContact(true)}
                 className='bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 p-3'
               >
                 Contact landlord
