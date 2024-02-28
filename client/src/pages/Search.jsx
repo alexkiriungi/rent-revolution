@@ -1,6 +1,8 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function Search() {
+    const navigate = useNavigate();
     const [ sidebarData, setSidebarData ] = useState({
         searchTerm: '',
         type: 'all',
@@ -10,6 +12,17 @@ export default function Search() {
         sort: 'created_at',
         order: 'desc',
     });
+
+    useEffect(() => {
+        const urlParams = new URLSearchParams(location.search);
+        const searchTermFromurl = urlParams.get('searchTerm');
+        const typeFromUrl = urlParams.get('type');
+        const parkingFromUrl = urlParams.get('parking');
+        const furnishedFromUrl = urlParams.get('furnished');
+        const offerFromUrl = urlParams.get('offer');
+        const sortFromUrl = urlParams.get('sort');
+        const orderFromUrl = urlParams.get('order');
+    })
 
     const handleChange = (e) => {
         if (e.target.id === 'all' || e.target.id === 'rent' || e.target.id === 'sale') {
@@ -29,10 +42,24 @@ export default function Search() {
         }
     };
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const urlParams = new URLSearchParams();
+        urlParams.set('searchterm', sidebarData.searchTerm);
+        urlParams.set('type', sidebarData.type);
+        urlParams.set('parking', sidebarData.parking);
+        urlParams.set('furnished', sidebarData.furnished);
+        urlParams.set('offer', sidebarData.offer);
+        urlParams.set('sort', sidebarData.sort)
+        urlParams.set('order', sidebarData.order);
+        const searchQuery = urlParams.toString();
+        navigate(`search/${searchQuery}`);
+    };
+
   return (
     <div className='flex flex-col md:flex-row'>
         <div className="p-7 border-b-2 md:border-r-2 md:min-h-screen">
-            <form className='flex flex-col gap-8'>
+            <form onSubmit={handleSubmit} className='flex flex-col gap-8'>
                 <div className="flex items-center gap-2">
                     <label className='whitespace-nowrap font-semibold'>Search Term: </label>
                     <input type='text'
