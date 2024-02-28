@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom';
 
 export default function Search() {
     const navigate = useNavigate();
+    const [ loading, setLoading ] = useState(false);
+    const [ listings, setListings ] = useState([]);
+    console.log(listings);
     const [ sidebarData, setSidebarData ] = useState({
         searchTerm: '',
         type: 'all',
@@ -22,7 +25,34 @@ export default function Search() {
         const offerFromUrl = urlParams.get('offer');
         const sortFromUrl = urlParams.get('sort');
         const orderFromUrl = urlParams.get('order');
-    })
+
+        if (searchTermFromurl || typeFromUrl || parkingFromUrl
+            || furnishedFromUrl || offerFromUrl || sortFromUrl
+            || orderFromUrl) {
+                setSidebarData({
+                    searchTerm : searchTermFromurl || '',
+                    type: typeFromUrl || 'all',
+                    parking: parkingFromUrl === 'true' ? true : false,
+                    furnished: furnishedFromUrl === 'true' ? true : false,
+                    offer: offerFromUrl === 'true' ? true : false,
+                    sort: sortFromUrl || 'created_at',
+                    order: orderFromUrl || 'desc',
+                });
+            }
+            const fetchListings = async () => {
+                setLoading(true);
+                try {
+                    const searchQuery = urlParams.toString();
+                    const res = await fetch(`/api/listing/get?${searchQuery}`);
+                    const data = await res.json();
+                    setListings(data);
+                    setLoading(false);
+                } catch (error) {
+                    console.log(error.message);
+                }
+            };
+            fetchListings();
+    }, [location.search]);
 
     const handleChange = (e) => {
         if (e.target.id === 'all' || e.target.id === 'rent' || e.target.id === 'sale') {
@@ -42,10 +72,10 @@ export default function Search() {
         }
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         const urlParams = new URLSearchParams();
-        urlParams.set('searchterm', sidebarData.searchTerm);
+        urlParams.set('searchTerm', sidebarData.searchTerm);
         urlParams.set('type', sidebarData.type);
         urlParams.set('parking', sidebarData.parking);
         urlParams.set('furnished', sidebarData.furnished);
@@ -53,7 +83,7 @@ export default function Search() {
         urlParams.set('sort', sidebarData.sort)
         urlParams.set('order', sidebarData.order);
         const searchQuery = urlParams.toString();
-        navigate(`search/${searchQuery}`);
+        navigate(`/search?${searchQuery}`);
     };
 
   return (
