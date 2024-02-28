@@ -135,7 +135,6 @@ export default function Profile() {
         method: 'DELETE',
       });
       const data = await res.json();
-      console.log(data);
       if (data.success === false) {
         setListingDeleteError(data.message);
         return;
