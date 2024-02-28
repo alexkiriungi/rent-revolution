@@ -118,7 +118,7 @@ export default function CreateListing() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     ...formData,
-                    userRef: updateCurrentUser._id
+                    userRef: currentUser._id,
                 }),
             });
             const data = await res.json();
@@ -126,7 +126,7 @@ export default function CreateListing() {
             if (data.success === false) {
                 setError(data.message);
             }
-            navigate(`/listing/${data._id}`)
+            navigate(`/listing/${data._id}`);
         } catch (error) {
             setError(error.message);
             setLoading(false);
@@ -138,7 +138,7 @@ export default function CreateListing() {
             <h1 className='text-3xl font-bold text-center my-7'>
                 Create a Listing
             </h1>
-            <form className='flex flex-col sm:flex-row gap-4'>
+            <form onSubmit={handleSubmit} className='flex flex-col sm:flex-row gap-4'>
                 <div className='flex flex-col gap-4 flex-1'>
                     <input type='text' placeholder='Name' className='border p-3 
                     rounded-lg' id='name' maxLength='62' minLength='10' required 
