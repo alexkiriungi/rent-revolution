@@ -25,6 +25,7 @@ export default function Profile() {
   const [ updateSuccess, setUpdateSuccess ] = useState(false);
   const [ showListingsError, setShowListingsError ] = useState(false);
   const [ userListings, setUserListings] = useState([]);
+  const [ listingDeleteError, setListingDeleteError] = useState(false);
 
   useEffect(() => {
     if (file) {
@@ -128,6 +129,7 @@ export default function Profile() {
   };
 
   const handleListingDelete = async (listingId) => {
+    setListingDeleteError(false);
     try {
       const res = await fetch(`/api/listing/delete/${listingId}`, {
         method: 'DELETE',
@@ -135,12 +137,12 @@ export default function Profile() {
       const data = await res.json();
       console.log(data);
       if (data.success === false) {
-        console.log(data.message);
+        setListingDeleteError(data.message);
         return;
       }
       setUserListings((prev) => prev.filter((listing) => listing._id !== listingId));
     } catch (error) {
-      console.log(error.message);
+      setListingDeleteError(error.message);
     }
   };
 
@@ -227,6 +229,7 @@ export default function Profile() {
               </div>
             </div>
       ))}
+      {listingDeleteError && <p className="text-red-700 mt-7 text-center">{listingDeleteError}</p>}
         </div>
         }
     </div>
