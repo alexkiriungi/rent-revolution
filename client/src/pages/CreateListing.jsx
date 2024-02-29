@@ -86,19 +86,19 @@ export default function CreateListing() {
             setFormData({
                 ...formData,
                 type: e.target.id
-            })
+            });
         }
         if (e.target.id === 'parking' || e.target.id === 'furnished' || e.target.id === 'offer') {
             setFormData({
                 ...formData,
                 [e.target.id]: e.target.checked
-            })
+            });
         }
         if (e.target.type === 'number' || e.target.type === 'text' || e.target.type === 'textarea') {
             setFormData({
                 ...formData,
                 [e.target.id]: e.target.value
-            })
+            });
         }
     };
 
@@ -190,22 +190,24 @@ export default function CreateListing() {
                             <span>Baths</span>
                         </div>
                         <div className="flex gap-2 items-center">
-                            <input type='number' id='regularPrice' min='7000' max='45000' required 
+                            <input type='number' id='regularPrice' min='7000' max='450000000' required 
                             className='p-3 border border-gray-300 rounded-lg' 
                             onChange={handleChange} value={formData.regularPrice} />
                             <div className="flex flex-col items-center">
                                 <span>Regular Price</span>
-                                <p className='text-xs'>(ksh / month)</p>
+                                {formData.type === 'rent' && (<p className='text-xs'>(ksh / month)</p>
+                                    )}
                             </div>
                         </div>
                         {formData.offer && (
                             <div className="flex gap-2 items-center">
-                                <input type='number' id='discountPrice' min='0' max='1000000' required 
+                                <input type='number' id='discountPrice' min='0' max='10000000' required 
                                 className='p-3 border border-gray-300 rounded-lg' 
                                 onChange={handleChange} value={formData.discountPrice} />
                                 <div className="flex flex-col items-center">
                                     <span>Discounted Price</span>
-                                    <p className='text-xs'>(ksh / month)</p>
+                                    {formData.type === 'rent' && (<p className='text-xs'>(ksh / month)</p>
+                                    )}
                                 </div>
                             </div>
                         )}

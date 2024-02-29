@@ -8,6 +8,7 @@ import ListingItem from '../components/ListingItem';
 
 export default function Home() {
   SwiperCore.use( [Navigation] );
+  
   const [ offerListings, setOfferListings ] = useState([]);
   const [ saleListings, setSaleListings ] = useState([]);
   const [ rentListings, setRentListings ] = useState([]);
@@ -20,7 +21,7 @@ export default function Home() {
         setOfferListings(data);
         fetchRentListings();
       } catch (error) {
-        console.log(error.message)
+        console.log(error)
       }
     };
 
@@ -74,7 +75,7 @@ export default function Home() {
       {/* Swiper images */}
       <Swiper navigation>
         {
-          offerListings && offerListings.length > 0 && 
+          offerListings && offerListings.length > 0 &&
           offerListings.map((listing) => (
             <SwiperSlide>
               <div
