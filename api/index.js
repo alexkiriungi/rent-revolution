@@ -26,9 +26,10 @@ app.use('/api/user', userRoutes);
 app.use('/api/listing', listingRoutes);
 
 app.use(express.static(path.join(__dirname, '/client/dist')));
+
 app.get('*', (req, res) => {
     res.sendFid(path.join(__dirname, 'client', 'dist', 'index.html'));
-})
+});
 
 app.listen(port, () => {
     console.log(`Server is connected at port: ${port}`)
